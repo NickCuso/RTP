@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', async () =>
 
 async function main() 
 {
-  const Web3 = require('web3');
+  //const Web3 = require('web3');
   const FetchSubprovider = require("web3-provider-engine/subproviders/fetch");
   const HookedWalletSubprovider = require("web3-provider-engine/subproviders/hooked-wallet");
   const ProviderEngine = require('web3-provider-engine');

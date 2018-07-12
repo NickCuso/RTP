@@ -1,434 +1,419 @@
+const eth = require("./eth").default;
 const abi = [
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"mintingFinished",
-     "outputs":[
-        {
-           "name":"",
-           "type":"bool"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-        {
-           "name":"_spender",
-           "type":"address"
-        },
-        {
-           "name":"_amount",
-           "type":"uint256"
-        }
-     ],
-     "name":"approve",
-     "outputs":[
-        {
-           "name":"",
-           "type":"bool"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"totalSupply",
-     "outputs":[
-        {
-           "name":"totalAmount",
-           "type":"uint256"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-        {
-           "name":"_from",
-           "type":"address"
-        },
-        {
-           "name":"_to",
-           "type":"address"
-        },
-        {
-           "name":"_amount",
-           "type":"uint256"
-        }
-     ],
-     "name":"transferFrom",
-     "outputs":[
-        {
-           "name":"success",
-           "type":"bool"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"DECIMALS",
-     "outputs":[
-        {
-           "name":"",
-           "type":"uint8"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-        {
-           "name":"_to",
-           "type":"address"
-        },
-        {
-           "name":"_amount",
-           "type":"uint256"
-        }
-     ],
-     "name":"mint",
-     "outputs":[
-        {
-           "name":"",
-           "type":"bool"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-        {
-           "name":"_address",
-           "type":"address"
-        }
-     ],
-     "name":"balanceOf",
-     "outputs":[
-        {
-           "name":"balance",
-           "type":"uint256"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-
-     ],
-     "name":"finishMinting",
-     "outputs":[
-        {
-           "name":"",
-           "type":"bool"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"baseSupply",
-     "outputs":[
-        {
-           "name":"initialAmount",
-           "type":"uint256"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"owner",
-     "outputs":[
-        {
-           "name":"",
-           "type":"address"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"NAME",
-     "outputs":[
-        {
-           "name":"",
-           "type":"string"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-        {
-           "name":"_to",
-           "type":"address"
-        },
-        {
-           "name":"_amount",
-           "type":"uint256"
-        }
-     ],
-     "name":"transfer",
-     "outputs":[
-        {
-           "name":"",
-           "type":"bool"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-
-     ],
-     "name":"makeTradable",
-     "outputs":[
-
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-        {
-           "name":"_owner",
-           "type":"address"
-        },
-        {
-           "name":"_spender",
-           "type":"address"
-        }
-     ],
-     "name":"allowance",
-     "outputs":[
-        {
-           "name":"remaining",
-           "type":"uint256"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":false,
-     "inputs":[
-        {
-           "name":"_newOwner",
-           "type":"address"
-        }
-     ],
-     "name":"transferOwnership",
-     "outputs":[
-
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"SYMBOL",
-     "outputs":[
-        {
-           "name":"",
-           "type":"string"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "constant":true,
-     "inputs":[
-
-     ],
-     "name":"vault",
-     "outputs":[
-        {
-           "name":"",
-           "type":"address"
-        }
-     ],
-     "payable":false,
-     "stateMutability":"view",
-     "type":"function"
-  },
-  {
-     "inputs":[
-
-     ],
-     "payable":false,
-     "stateMutability":"nonpayable",
-     "type":"constructor"
-  },
-  {
-     "anonymous":false,
-     "inputs":[
-        {
-           "indexed":true,
-           "name":"_to",
-           "type":"address"
-        },
-        {
-           "indexed":false,
-           "name":"_value",
-           "type":"uint256"
-        }
-     ],
-     "name":"Mint",
-     "type":"event"
-  },
-  {
-     "anonymous":false,
-     "inputs":[
-
-     ],
-     "name":"MintFinished",
-     "type":"event"
-  },
-  {
-     "anonymous":false,
-     "inputs":[
-
-     ],
-     "name":"TradableTokens",
-     "type":"event"
-  },
-  {
-     "anonymous":false,
-     "inputs":[
-        {
-           "indexed":true,
-           "name":"_from",
-           "type":"address"
-        },
-        {
-           "indexed":true,
-           "name":"_to",
-           "type":"address"
-        },
-        {
-           "indexed":false,
-           "name":"_amount",
-           "type":"uint256"
-        }
-     ],
-     "name":"Transfer",
-     "type":"event"
-  },
-  {
-     "anonymous":false,
-     "inputs":[
-        {
-           "indexed":true,
-           "name":"_owner",
-           "type":"address"
-        },
-        {
-           "indexed":true,
-           "name":"_spender",
-           "type":"address"
-        },
-        {
-           "indexed":false,
-           "name":"_amount",
-           "type":"uint256"
-        }
-     ],
-     "name":"Approval",
-     "type":"event"
-  }
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "topic",
+				"type": "string"
+			}
+		],
+		"name": "accept",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "topic",
+				"type": "string"
+			}
+		],
+		"name": "decline",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "declineAll",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "topic",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "NewTopic",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "topic",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Decline",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "topic",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Accept",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "topic",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "ContributeToTopic",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "topic",
+				"type": "string"
+			}
+		],
+		"name": "refund",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "refundAll",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "topic",
+				"type": "string"
+			}
+		],
+		"name": "requestTopic",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_minForNewTopic",
+				"type": "uint256"
+			},
+			{
+				"name": "_minForExistingTopic",
+				"type": "uint256"
+			}
+		],
+		"name": "setMins",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "topic",
+				"type": "string"
+			}
+		],
+		"name": "getSupportersForTopic",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getTopic",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getTopicCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "minForExistingTopic",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "minForNewTopic",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
 ];
-
-const contract = web3.eth.contract(abi).at('0xc77add231ef94ca78968aa6ce7e4f4474362c544');
+const contract = web3.eth.contract(abi).at('0x57938d12acc9f239628209c0cf6276693921982a');
 
 export default
 {
-  getBalance()
+  getTopicCount()
   {
     return new Promise((resolve, reject) =>
     {
-      contract.balanceOf(web3.eth.defaultAccount, function(error, balance)
+      contract.getTopicCount(function(error, count)
       {
         if(error)
         {
           return reject(error);
         }
-        resolve(balance);
+        resolve(count);
       });
     });
   },
-  transfer()
+  getTopic(id)
   {
     return new Promise((resolve, reject) =>
     {
-      contract.transfer(web3.eth.defaultAccount, 1, {value: 0, gas: 2000}, function(error, balance)
+      contract.getTopic(id, function(error, topic)
       {
         if(error)
         {
           return reject(error);
         }
-        resolve(balance);
+        resolve(topic);
       });
     });
+  },
+  getSupportersForTopic(topic)
+  {
+    return new Promise((resolve, reject) =>
+    {
+      contract.getSupportersForTopic(topic, function(error, addresses, values)
+      {
+        if(error)
+        {
+          return reject(error);
+        }
+        resolve(addresses, values);
+      });
+    });
+  },
+  async requestTopic(topic, value, onTxPosted)
+  {
+    value = await eth.fromEthToWei(value);
+    return new Promise((resolve, reject) =>
+    {
+      contract.requestTopic(topic, {value}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+    });
+  },
+  refund(topic, onTxPosted)
+  {
+    return new Promise((resolve, reject) =>
+    {
+      contract.refund(topic, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+    });
+  },
+  refundAll()
+  {
+    return new Promise((resolve, reject) =>
+    {
+      contract.refundAll(async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+    });
+  },
+  accept(topic, onTxPosted)
+  {
+    return new Promise((resolve, reject) =>
+    {
+      contract.accept(topic, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+    });
+  },
+  decline(topic, onTxPosted)
+  {
+    return new Promise((resolve, reject) =>
+    {
+      contract.decline(topic, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+    });
+  },
+  declineAll()
+  {
+    return new Promise((resolve, reject) =>
+    {
+      contract.declineAll(async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+    });
+  },
+}
+
+async function onWrite(resolve, reject, error, txhash, onTxPosted)
+{
+  if(error)
+  {
+    return reject(error);
   }
+  if(onTxPosted)
+  {
+    onTxPosted(txhash);
+  }
+  let txobject = await eth.pollForTransactionReceipt(txhash);
+  resolve(txobject);
 }
 
 // create filter

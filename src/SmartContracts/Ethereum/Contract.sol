@@ -87,7 +87,7 @@ contract ReviewThisPlease is Ownable
      *******************************************/
     constructor() public 
     {
-        minForNewTopic = 0.5 ether;
+        minForNewTopic = 0.05 ether;
         minForExistingTopic = 0.001 ether;
     }
     
@@ -156,7 +156,7 @@ contract ReviewThisPlease is Ownable
         }
         else
         { // Existing topic
-            require(msg.value > minForExistingTopic, 
+            require(msg.value >= minForExistingTopic, 
                 "Please send at least 'minForExistingTopic' to add support to an existing topic.");
         
             emit ContributeToTopic(topic, msg.sender, msg.value);

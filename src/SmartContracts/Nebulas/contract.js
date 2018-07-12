@@ -22,11 +22,17 @@ Contract.prototype =
 
     this.owner_addr = new_owner_addr;
   },
+
   setMessage: function(topic, message)
   {
     assert(this.isOwner(), "This is an owner only call.");
     this.topic_to_message.put(topic, message);
   },
+
+  getMessage: function(topic)
+  {
+    return this.topic_to_message.get(topic);
+  }
 }
 
 module.exports = Contract

@@ -5,6 +5,7 @@ import VueLocalStorage from 'vue-localstorage'
 
 import eth from "./js/eth.js";
 import contract from "./js/contract.js";
+import 'bootstrap'
 
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage);

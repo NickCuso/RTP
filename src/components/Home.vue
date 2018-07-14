@@ -1,10 +1,6 @@
 <template>
   <div>
-    <Notifications />
-
-    <WalletType />
-    <Network />
-    <GasPrice />
+    <Header />
 
     <Loading v-if="$root.balance == null && !$root.no_account_found" />
     <Balance v-if="$root.balance != null" />
@@ -29,15 +25,12 @@ import contract from "../js/contract.js";
 import AdminPanel from './AdminPanel';
 import Balance from './Balance';
 import Footer from './Footer';
-import GasPrice from './GasPrice';
+import Header from './Header';
 import Loading from './Loading';
-import Network from './Network';
-import Notifications from './Notifications';
 import NoAccountFound from './NoAccountFound';
 import RequestTopic from './RequestTopic';
 import Topic from './Topic';
 import UserPanel from './UserPanel';
-import WalletType from './WalletType';
 
 export default 
 {
@@ -46,15 +39,12 @@ export default
     AdminPanel,
     Balance,
     Footer,
-    GasPrice,
+    Header,
     Loading,
-    Network,
-    Notifications,
     NoAccountFound,
     RequestTopic,
     Topic,
     UserPanel,
-    WalletType,
   },
 }
 </script>

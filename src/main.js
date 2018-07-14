@@ -1,28 +1,91 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueLocalStorage from 'vue-localstorage'
 
-Vue.config.productionTip = false
+import eth from "./js/eth.js";
+import contract from "./js/contract.js";
 
-Vue.filter('eth', function (value) {
+Vue.config.productionTip = false
+Vue.use(VueLocalStorage);
+
+Vue.filter('eth', function (value) 
+{
   return value.toString() + " ETH";
 });
 
-Vue.use(VueLocalStorage);
 
-// Or you can specify any other name and use it via this.$ls, this.$whatEverYouWant
-Vue.use(VueLocalStorage, {
-  name: 'ls',
-  bind: true //created computed members from your variable declarations
-});
-
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
-})
+  template: '<App/>',
+  data() {
+    return {
+      balance: null,
+      no_account_found: false,
+      is_owner: false,
+      notifications: [],
+      topics: [],
+      my_total_contributions: 0,
+    }
+  },
+  async beforeCreate() 
+  {
+    this.is_owner = await contract.getIsOwner();
+    this.balance = await eth.getBalanceInEth().catch((e) =>
+    {
+        this.no_account_found = true;
+    });
+    let topic_count = await contract.getTopicCount();
+    let address = await eth.getAddress();
+    this.my_total_contributions = 0;
+    for(let i = 0; i < topic_count; i++)
+    {
+      let topic = await contract.getTopic(i);
+      let supporters = await contract.getSupportersForTopic(topic);
+      let total = 0;
+      let supporter_count = 0;
+      let my_contribution = 0;
+      for(let iSupport = 0; iSupport < supporters[1].length; iSupport++)
+      {
+        let value = parseInt(supporters[1][iSupport]);
+        total += value;
+        let supporter = supporters[0][iSupport];
+        if(supporter == address)
+        {
+          my_contribution += value;
+        }
+        if(supporters[0].indexOf(supporter) == iSupport)
+        {
+          supporter_count++;
+        }
+      }
+      total = await eth.fromWeiToEth(total);
+      my_contribution = await eth.fromWeiToEth(my_contribution);
+      this.my_total_contributions += my_contribution;
+      this.topics.push({topic, supporter_count, total_support: total, my_contribution});
+    }
+  },
+  methods: {
+    showNotification(title, message, href, href_text, length = 3000, noAutoRemove = false)
+    {
+      this.notifications.push({
+        title: title,
+        message: message,
+        href: href,
+        href_text: href_text,
+        length: length,
+        no_auto_remove: noAutoRemove
+      });
+    },
+    onTxPosted(txhash)
+    {
+      this.showNotification("Transaction Posted", "wait for it..", null, 10000, true);
+    },
+    onTxComplete(txobject)
+    {
+      this.showNotification("Transaction Complete", "Thanks yo");
+    },
+  }
+});

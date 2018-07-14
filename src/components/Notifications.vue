@@ -1,6 +1,6 @@
 <template>
     <div class="notifications-container">
-        <div v-for="(notification, index) in notifications" class="notification glow-1" v-bind:key="index" @click="removeNotification(index)">
+        <div v-for="(notification, index) in $root.notifications" class="notification glow-1" v-bind:key="index" @click="removeNotification(index)">
             <p v-if="notification.title" class="title">{{notification.title}}</p>
             <p v-if="notification.message" class="message">{{notification.message.toString()}}</p>
             <a onclick="event.stopPropagation();" target="_blank" v-if="notification.href" :href="notification.href">
@@ -13,46 +13,53 @@
 </template>
 
 <script>
+// TODO show the view in block explorer link
   export default {
-    name: "Notifications",
-    props : ['notifications'],
-    data(){
+    data()
+    {
       return {
         removed: false,
         interval : 100,
         default_time : 10000 //10 seconds
-
       }
     },
-    methods : {
-      removeNotification(index){
-        this.notifications.splice(index, 1);
+    methods: 
+    {
+      removeNotification(index)
+      {
+        this.$root.notifications.splice(index, 1);
       },
-      tick(){
+      tick()
+      {
         if(this.removed)
-          return;
-
-        while(this.notifications.length > 1)
         {
-          this.notifications.splice(0,1);
+            return;
         }
 
-        for(let i = this.notifications.length -1;i>=0;i--){
-          if(!this.notifications[i].count)
-            this.notifications[i].count = 0;
-          this.notifications[i].count++;
+        while(this.$root.notifications.length > 1)
+        {
+          this.$root.notifications.splice(0,1);
+        }
 
-          if(!this.notifications[i].no_auto_remove &&  this.notifications[i].count * this.interval > this.default_time)
-            this.notifications.splice(i,1);
+        for(let i = this.$root.notifications.length -1; i>=0; i--)
+        {
+          if(!this.$root.notifications[i].count)
+            this.$root.notifications[i].count = 0;
+          this.$root.notifications[i].count++;
+
+          if(!this.$root.notifications[i].no_auto_remove &&  this.$root.notifications[i].count * this.interval > this.default_time)
+            this.$root.notifications.splice(i,1);
         }
 
         setTimeout(this.tick, this.interval);
       }
     },
-    mounted : function(){
+    mounted()
+    {
       this.tick();
     },
-    destroyed : function(){
+    destroyed()
+    {
       this.removed = true;
     }
 
@@ -97,7 +104,6 @@
         left:5px;
         width:300px;
         height:150px;
-        background-color:rgba(0,0,0,0.9);
         margin-top:5px;
         pointer-events:all;
     }

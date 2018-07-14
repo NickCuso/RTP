@@ -9,27 +9,28 @@
 
 <script>
 import local from "../js/localstorage.js";
-  export default {
-    name: "WalletType",
-    props : [],
-    data(){
-      return {
-          walletType: 0
-      }
-    },
-    methods:
-    {
-      onChange()
-      {
-          local.setWalletType(this.walletType);
-      }
-    },
-    async mounted()
-    {
-        this.walletType = local.getWalletType();
-    },
-  }
-</script>
 
+export default 
+{
+  data()
+  {
+    return {
+        walletType: 0
+    }
+  },
+  methods:
+  {
+    onChange()
+    {
+        local.setWalletType(this.walletType);
+    }
+  },
+  async mounted()
+  {
+      this.walletType = local.getWalletType();
+  },
+}
+</script>
 <style scoped>
+
 </style>

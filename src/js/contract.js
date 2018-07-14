@@ -1,4 +1,6 @@
-const eth = require("./eth").default;
+import eth from "./eth";
+import localstorage from "./localstorage";
+
 const abi = [
 	{
 		"constant": false,
@@ -311,15 +313,55 @@ const abi = [
 		"type": "function"
 	}
 ];
-const contract = web3.eth.contract(abi).at('0x57938d12acc9f239628209c0cf6276693921982a');
+
+let contract = null;
+let contract_address;
+
+window.addEventListener('DOMContentLoaded', async () =>
+{
+	let e = eth.getEth();
+	contract_address = '0xebb96c1606c34508ab1e62fa97e07ab8e77c1df7';
+	let network_type = await eth.getNetworkType();
+	if(network_type == 3)
+	{
+		contract_address = '0x707dfced14c240c2eef1ff65490981e9893aa7fa';
+	}
+	let my_contract = new e.Contract(abi, contract_address);
+	my_contract.options.from = await eth.getAddress();
+	contract = my_contract.methods;
+});
+
+function sleep(ms) 
+{
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function init()
+{
+  while(!eth.getIsInit())
+  {
+    await sleep(500);
+  }
+}
 
 export default
 {
-  getTopicCount()
+	async getContractAddress()
+	{
+		await init();
+		return contract_address;
+	},
+	async getContractUrl()
+	{
+		await init();
+		return await eth.getEtherscanUrl() + "/address/" + contract_address;
+	},
+  async getTopicCount()
   {
+		await init();
     return new Promise((resolve, reject) =>
     {
-      contract.getTopicCount(function(error, count)
+      contract.getTopicCount().call(function(error, count)
       {
         if(error)
         {
@@ -329,11 +371,12 @@ export default
       });
     });
   },
-  getTopic(id)
+  async getTopic(id)
   {
+		await init();
     return new Promise((resolve, reject) =>
     {
-      contract.getTopic(id, function(error, topic)
+      contract.getTopic(id).call(function(error, topic)
       {
         if(error)
         {
@@ -343,11 +386,13 @@ export default
       });
     });
   },
-  getSupportersForTopic(topic)
+  async getSupportersForTopic(topic)
   {
+		await init();
+
     return new Promise((resolve, reject) =>
     {
-      contract.getSupportersForTopic(topic, function(error, addresses, values)
+      contract.getSupportersForTopic(topic).call(function(error, addresses, values)
       {
         if(error)
         {
@@ -356,48 +401,83 @@ export default
         resolve(addresses, values);
       });
     });
-  },
+	},
+	async getOwner()
+	{
+		await init();
+
+		return new Promise((resolve, reject) =>
+		{
+			contract.owner().call((error, owner) =>
+			{
+				console.log("Owner: " + owner);
+        if(error)
+        {
+          return reject(error);
+        }
+				resolve(owner);
+			});
+		});
+	},
+	async getIsOwner()
+	{
+		let owner = await this.getOwner();
+		let user = await eth.getAddress();
+		return owner == user;
+	},
   async requestTopic(topic, value, onTxPosted)
   {
+		await init();
+
     value = await eth.fromEthToWei(value);
     return new Promise((resolve, reject) =>
     {
-      contract.requestTopic(topic, {value}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+      contract.requestTopic(topic).send({value, gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
     });
   },
-  refund(topic, onTxPosted)
+  async refund(topic, onTxPosted)
   {
+		await init();
+
     return new Promise((resolve, reject) =>
     {
-      contract.refund(topic, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+      contract.refund(topic).send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
     });
   },
-  refundAll()
+  async refundAll()
   {
+		await init();
+
     return new Promise((resolve, reject) =>
     {
-      contract.refundAll(async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+      contract.refundAll().send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
     });
   },
-  accept(topic, onTxPosted)
+  async accept(topic, onTxPosted)
   {
+		await init();
+
     return new Promise((resolve, reject) =>
     {
-      contract.accept(topic, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+      contract.accept(topic).send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
     });
   },
-  decline(topic, onTxPosted)
+  async decline(topic, onTxPosted)
   {
+		await init();
+
     return new Promise((resolve, reject) =>
     {
-      contract.decline(topic, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+      contract.decline(topic).send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
     });
   },
-  declineAll()
+  async declineAll()
   {
+		await init();
+
     return new Promise((resolve, reject) =>
     {
-      contract.declineAll(async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
+      contract.declineAll().send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted));
     });
   },
 }

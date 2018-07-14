@@ -316,6 +316,7 @@ const abi = [
 
 let contract = null;
 let contract_address;
+let is_init = false;
 
 window.addEventListener('DOMContentLoaded', async () =>
 {
@@ -327,8 +328,13 @@ window.addEventListener('DOMContentLoaded', async () =>
 		contract_address = '0x707dfced14c240c2eef1ff65490981e9893aa7fa';
 	}
 	let my_contract = new e.Contract(abi, contract_address);
-	my_contract.options.from = await eth.getAddress();
+	let from = await eth.getAddress();
+	if(from)
+	{	
+		my_contract.options.from = from;
+	}
 	contract = my_contract.methods;
+	is_init = true;
 });
 
 function sleep(ms) 
@@ -338,7 +344,7 @@ function sleep(ms)
 
 async function init()
 {
-  while(!eth.getIsInit())
+  while(!is_init || !eth.getIsInit())
   {
     await sleep(500);
   }

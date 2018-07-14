@@ -23,6 +23,7 @@ export default
     onChange()
     {
         local.setWalletType(this.walletType);
+        location.reload();
     }
   },
   async mounted()

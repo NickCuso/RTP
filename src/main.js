@@ -32,11 +32,6 @@ new Vue({
   },
   async beforeCreate() 
   {
-    this.is_owner = await contract.getIsOwner();
-    this.balance = await eth.getBalanceInEth().catch((e) =>
-    {
-        this.no_account_found = true;
-    });
     let topic_count = await contract.getTopicCount();
     let address = await eth.getAddress();
     this.my_total_contributions = 0;
@@ -65,6 +60,16 @@ new Vue({
       my_contribution = await eth.fromWeiToEth(my_contribution);
       this.my_total_contributions += my_contribution;
       this.topics.push({topic, supporter_count, total_support: total, my_contribution});
+    }
+
+    if(address)
+    {
+      this.balance = await eth.getBalanceInEth();
+      this.is_owner = await contract.getIsOwner();
+    }
+    else
+    {
+      this.no_account_found = true;
     }
   },
   methods: {

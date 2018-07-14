@@ -7,6 +7,7 @@ import RpcSubprovider from "web3-provider-engine/subproviders/rpc";
 
 let is_init = false;
 let my_web3 = null;
+let address;
 let rpcUrl;
 
 window.addEventListener('DOMContentLoaded', async () =>
@@ -16,7 +17,7 @@ window.addEventListener('DOMContentLoaded', async () =>
   {
     rpcUrl = 'https://mainnet.infura.io';
   } 
-  else if(network_type == 2)
+  else if(network_type == 3)
   {
     rpcUrl = 'https://ropsten.infura.io';
   }
@@ -25,7 +26,9 @@ window.addEventListener('DOMContentLoaded', async () =>
     const engine = new ProviderEngine();
     const getTransport = () => TransportU2F.create();
     const ledger = createLedgerSubprovider(getTransport, {
-      accountsLength: 5
+      networkId: localstorage.getNetworkType(),
+      accountsLength: 1,
+      // TODO add offset support
     });
     engine.addProvider(ledger);
 
@@ -95,15 +98,41 @@ export default
   },
   async getAddress()
   {
+    if(address !== undefined)
+    {
+      return address;
+    }
     await init();
     return new Promise((resolve, reject) =>
     {
+      let done = false;
+      setTimeout(() =>
+      {
+        if(done)
+        {
+          return;
+        }
+        done = true;
+        address = null;
+        resolve(address);
+      }, 1000);
+
       my_web3.eth.getAccounts((err, accounts) =>
       {
-        let account = accounts[0];
-        console.log("Account: " + account);
-        my_web3.eth.defaultAccount = account;
-        resolve(account);
+        if(done)
+        {
+          return;
+        }
+        done = true;
+        if(err || accounts.length < 1)
+        {
+          address = null;
+          return resolve(address);
+        }
+        
+        address = accounts[0];
+        my_web3.eth.defaultAccount = address;
+        resolve(address);
       });
     }); 
   },

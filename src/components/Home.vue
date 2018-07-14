@@ -33,6 +33,7 @@ import GasPrice from './GasPrice';
 import Loading from './Loading';
 import Network from './Network';
 import Notifications from './Notifications';
+import NoAccountFound from './NoAccountFound';
 import RequestTopic from './RequestTopic';
 import Topic from './Topic';
 import UserPanel from './UserPanel';
@@ -49,6 +50,7 @@ export default
     Loading,
     Network,
     Notifications,
+    NoAccountFound,
     RequestTopic,
     Topic,
     UserPanel,

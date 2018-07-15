@@ -332,6 +332,11 @@ window.addEventListener('DOMContentLoaded', async () =>
 	if(from)
 	{	
 		my_contract.options.from = from;
+		// didn't help my_contract.defaultAccount = from.toString();
+	}
+	else
+	{
+		// didn't help. my_contract.options.from = "0xdb92C096bc5Efa8aDB48F05CD601DDdb75228203";
 	}
 	contract = my_contract.methods;
 	is_init = true;

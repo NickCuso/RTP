@@ -8,21 +8,21 @@ import RpcSubprovider from "web3-provider-engine/subproviders/rpc";
 let is_init = false;
 let my_web3 = null;
 let address;
-let rpcUrl;
 
 window.addEventListener('DOMContentLoaded', async () =>
 {
   let network_type = localstorage.getNetworkType();
-  if(network_type == 1)
-  {
-    rpcUrl = 'https://mainnet.infura.io';
-  } 
-  else if(network_type == 3)
+  let rpcUrl;
+  if(network_type == 3)
   {
     rpcUrl = 'https://ropsten.infura.io';
   }
-  if(localstorage.getWalletType() == 1)
+  else
   {
+    rpcUrl = 'https://mainnet.infura.io';
+  }
+  if(localstorage.getWalletType() == 1)
+  { // Ledger
     const engine = new ProviderEngine();
     const getTransport = () => TransportU2F.create();
     const ledger = createLedgerSubprovider(getTransport, {
@@ -37,11 +37,11 @@ window.addEventListener('DOMContentLoaded', async () =>
     my_web3 = new Web3(engine); // ledger
   }
   else if (typeof web3 !== 'undefined') 
-  {
+  { // Metamask
     my_web3 = new Web3(web3.currentProvider);
   }
   else
-  {
+  { // Nothing
     my_web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
   }
   is_init = true;
@@ -81,20 +81,33 @@ export default
   },
   async getNetworkType()
   {
-    let network = localstorage.getNetworkType();
-    if(network)
+    if(localstorage.getWalletType() == 0 && await this.getAddress() != null)
     {
-      return network;
-    }
-
-    await init();
-    return new Promise((resolve, reject) =>
-    {
-      web3.version.getNetwork((err, netId) => 
+      await init();
+      return new Promise((resolve, reject) =>
       {
-        resolve(parseInt(netId));
+        web3.version.getNetwork((err, netId) => 
+        {
+          resolve(parseInt(netId));
+        });
       });
-    });
+    }
+    else
+    {
+      let network = localstorage.getNetworkType();
+      if(network != null)
+      {
+        return network;
+      }
+      else 
+      {
+        return 1;
+      }
+    }
+  },
+  getIsMetamaskInstalled()
+  {
+    return typeof web3 !== 'undefined';
   },
   async getAddress()
   {

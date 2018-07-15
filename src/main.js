@@ -25,6 +25,7 @@ new Vue({
     return {
       balance: null,
       no_account_found: false,
+      loading: true,
       is_owner: false,
       notifications: [],
       topics: [],
@@ -72,6 +73,7 @@ new Vue({
     {
       this.no_account_found = true;
     }
+    this.loading = false;
   },
   methods: {
     showNotification(title, message, href, href_text, length = 3000, noAutoRemove = false)

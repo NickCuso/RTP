@@ -1,10 +1,10 @@
 <template>
-    <div>
-      <select v-model="walletType" @change="onChange">
+    <span>
+      Wallet: <select v-model="walletType" @change="onChange">
           <option value="0">Metamask</option>
           <option value="1">Ledger</option>
       </select>
-    </div>
+    </span>
 </template>
 
 <script>

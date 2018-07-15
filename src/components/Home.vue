@@ -2,7 +2,7 @@
   <div>
     <Header />
 
-    <Loading v-if="$root.balance == null && !$root.no_account_found" />
+    <Loading v-if="$root.loading" />
     <Balance v-if="$root.balance != null" />
     <NoAccountFound v-if="$root.no_account_found" />
 

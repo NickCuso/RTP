@@ -1,6 +1,6 @@
 <template>
     <div>
-        Gas Price: <input type="number" v-model="gasPrice" @change="onChange" />
+        Gas Price: <input type="number" v-model="gasPrice" @change="onChange" class="gasPrice" /> Gwei
     </div>
 </template>
 
@@ -30,5 +30,10 @@ export default
 }
 </script>
 <style scoped>
-
+.gasPrice
+{
+    width: 3.5em;
+    text-align: right;
+    height: 1.25em;
+}
 </style>

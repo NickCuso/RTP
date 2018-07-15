@@ -18,10 +18,6 @@ export default
 
   getNetworkType()
   {
-    if(this.getWalletType() == 0)
-    { // fall back to metamask instead
-      return null;
-    }
     return getInt(network_type, 1);
   },
 

@@ -1,14 +1,20 @@
 <template>
-    <div class="row">
-        <div class="col text-right">
-            <WalletType />
-            <Network />
-            <GasPrice />
-        </div>
-
-        <Notifications />
-    </div>
+<span>
+<nav id="navbar-example2" class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">Review This Please</a>
+  <ul class="nav nav-pills">
+    <li class="nav-item text-right" v-if="!$root.loading">
+        <WalletType />
+        <Network />
+        <GasPrice />
+    </li>
+      </ul>
+</nav>
+    <Notifications />
+</span>
 </template>
+
+
 
 <script>
 import GasPrice from './GasPrice';

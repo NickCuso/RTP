@@ -1,5 +1,0 @@
- - USD estimate
- - If loading for too long, refresh the page.
- - Add an elipse to the loading.
- - Hosting (hardlydifficult.com?)
-   - Is there another top level content?   maybe later...

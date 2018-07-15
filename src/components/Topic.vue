@@ -10,7 +10,7 @@
         </div>
         <div class="row small text-secondary">
             <div class="col">
-                {{ topic.total_support }} ETH
+                {{ topic.total_support | eth }} 
                 ({{ topic.supporter_count }} supporter<span v-if="topic.supporter_count>1">s</span>)
             </div>
         </div> 
@@ -20,7 +20,7 @@
         </div>
         <div class="row mt-2" v-if="topic.my_contribution > 0">
             <div class="col">
-                Your Contribution: {{ topic.my_contribution }} ETH
+                Your Contribution: {{ topic.my_contribution | eth }}
                 <button @click="refund()" class="btn btn-secondary">Refund</button>
             </div>
         </div>
@@ -38,8 +38,8 @@
                         <div class="col-12">
                             Tip: <input type="number" v-model="value" :min="$root.min_for_existing_topic" step="0.01"/> ETH
                         </div>
-                        <div class="col-12 mt-1">
-                            ({{ $root.min_for_existing_topic }} ETH minimum)
+                        <div class="col-12 mt-1 small">
+                            {{ $root.min_for_existing_topic | eth }} minimum
                         </div>
                         <div class="col-12 mt-3">
                             <button @click="add()" class="btn btn-primary" v-bind:disabled="value < $root.min_for_existing_topic">Add Tip</button>
@@ -50,7 +50,7 @@
         <div class="row mt-1 mb-2">
             <div class="col">
                 <span v-if="!$root.no_account_found && !show_tip">
-                    <a @click="show_tip = true" href="#">Tip This Topic</a>
+                    <button class="btn btn-link" @click="show_tip = true">Tip This Topic</button>
                 </span>
             </div>
         </div> 

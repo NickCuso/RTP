@@ -15,8 +15,8 @@
                     &nbsp;<input type="number" v-model="value" :min="$root.min_for_new_topic" step="0.01">&nbsp;
                     <span class="aoeu">ETH</span>
                 </div>
-                <div class="row justify-content-center">
-                    ({{ $root.min_for_new_topic }} ETH minimum)
+                <div class="row justify-content-center small">
+                    {{ $root.min_for_new_topic | eth }} minimum
                 </div>
                 <div class="row mt-3 justify-content-center">
                     <button @click="requestTopic()" class="btn btn-primary" v-bind:disabled="topic.length <= 3 || value < $root.min_for_new_topic">Request Topic</button>

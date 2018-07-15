@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="$root.my_total_contributions > 0">
-            Your Total Pending Contribution: {{ $root.my_total_contributions }} ETH
+            Your Total Pending Contribution: {{ $root.my_total_contributions | eth }} 
             <br>
             <button @click="refundAll()" class="btn btn-secondary">Refund All</button>
         </div>

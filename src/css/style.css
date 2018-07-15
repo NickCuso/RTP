@@ -55,3 +55,7 @@ hr
     width: 60em;
     max-width: 95%;
 }
+.ellipse
+{
+  position:absolute;
+}

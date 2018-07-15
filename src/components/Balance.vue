@@ -1,6 +1,6 @@
 <template>
     <div>
-        Balance: {{ $root.balance }} ETH
+        Balance: {{ $root.balance | ethOnly }} 
     </div>
 </template>
 

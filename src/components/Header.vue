@@ -6,8 +6,8 @@
     <div class="subtitle">HardlyDifficult</div>
     Review This Please
     
-    <div v-if="!$root.show_about" class="small">
-        <a @click="$root.showAbout(true)" href="#">About</a>
+    <div v-if="!$root.show_about">
+        <button class="btn btn-link small" @click="$root.showAbout(true)">About</button>
     </div>
   </span>
   

@@ -12,20 +12,67 @@ require('./css/style.css');
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage);
 
+// From https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+const numberWithCommas = (x, decimals, trim_zeros) => 
+{
+  if(x == null)
+  {
+    return null;
+  }
+    let parts;
+    if(decimals == null)
+    {
+        decimals = 0;
+        parts = x.split(".");
+    }
+    else
+    {
+      parts = new BigNumber(x.toString()).toFixed(decimals).split(".");
+    }
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if(parts.length > 1 && trim_zeros)
+    {
+      let i;
+      for(i = parts[1].length - 1; i >= 0; i--)
+      {
+        if(parts[1][i] != '0')
+        {
+          break;
+        }
+      }
+      i++;
+      parts[1] = parts[1].substring(0, i);
+    }
+    return parts.join(".");
+}
+
 Vue.filter('eth', function (value) 
 {
-  if(this.eth_to_usd)
+  let eth = numberWithCommas(value.toString());
+  eth = eth + " ETH";
+  if(v.eth_to_usd)
   {
-    return value.toString() + " ETH (~$" + (value * this.eth_to_usd) + " USD";
+    return eth + " (~$" + numberWithCommas(value * v.eth_to_usd, 2) + " USD)";
   }
-  return value.toString() + " ETH";
+  return eth;
 });
 
-new Vue({
+Vue.filter('ethOnly', function (value) 
+{
+  let eth = numberWithCommas(value.toString());
+  eth = eth + " ETH";
+  return eth;
+});
+
+let v = new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>',
+  filters:
+  {
+
+  },
   data() {
     return {
       networkType: 0,
@@ -47,7 +94,7 @@ new Vue({
   {
     await this.refreshData();
     this.loading = false;
-    this.eth_to_usd = await eth.getEthToUsd();
+    this.$set(this, 'eth_to_usd', await eth.getEthToUsd());
   },
   methods: {
     showAbout(visible)

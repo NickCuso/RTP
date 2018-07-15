@@ -14,6 +14,10 @@ Vue.use(VueLocalStorage);
 
 Vue.filter('eth', function (value) 
 {
+  if(this.eth_to_usd)
+  {
+    return value.toString() + " ETH (~$" + (value * this.eth_to_usd) + " USD";
+  }
   return value.toString() + " ETH";
 });
 
@@ -36,12 +40,14 @@ new Vue({
       min_for_existing_topic: null,
       min_for_new_topic: null,
       show_about: local.getShowAbout(),
+      eth_to_usd: null,
     }
   },
   async mounted() 
   {
     await this.refreshData();
     this.loading = false;
+    this.eth_to_usd = await eth.getEthToUsd();
   },
   methods: {
     showAbout(visible)

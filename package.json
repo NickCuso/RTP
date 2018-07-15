@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ledgerhq/web3-subprovider": "^4.20.0",
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.2",
     "create-dapp": "^4.7.3",
     "ethjs": "^0.4.0",

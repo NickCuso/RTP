@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import localstorage from "./localstorage";
+import axios from "axios";
 import createLedgerSubprovider from "@ledgerhq/web3-subprovider";
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import ProviderEngine from "web3-provider-engine";
@@ -68,6 +69,17 @@ export default
   getEth()
   {
     return my_web3.eth;
+  },
+  async getEthToUsd()
+  {
+    return new Promise((resolve, reject) =>
+    {
+      axios.get("https://api.coinmarketcap.com/v2/ticker/1027/?convert=USD")
+        .then(response => 
+          {
+            resolve(response.data.data.quotes.USD.price);
+          });
+    });
   },
   async getEtherscanUrl()
   {

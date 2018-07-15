@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <div class="card text-white bg-info mb-3 text-center">
+        <div class="card info-card text-white bg-secondary mb-3 text-center">
              <div class="card-body">
                 <h5 class="card-title">No Account Detected</h5>
                 <p class="card-text">
@@ -12,7 +12,11 @@
                          metamask locked (or no wallet)
                     </span>
                     <span v-else>
-                         Get Metamask
+                         <a class="text-warning" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">
+                            Get Metamask</a>
+                            and then refresh this page.
+                            <br><br>
+                            Or switch the wallet type in the top-right.
                     </span>
                 </p>
             </div>
@@ -36,6 +40,7 @@ export default
 }
 </script>
 <style scoped>
+
 .card
 {
     margin-top: 1em;

@@ -2,6 +2,7 @@ import Vue from 'vue';
 const wallet_type = 'walletType';
 const network_type = 'networkType';
 const gas_price = 'gasPrice';
+const show_about = 'showAbout';
 import eth from "./eth";
 
 export default
@@ -14,6 +15,16 @@ export default
   setWalletType(walletType)
   {
     setInt(wallet_type, walletType);
+  },
+  
+  getShowAbout()
+  {
+    return getInt(show_about, 1) == 1;
+  },
+
+  setShowAbout(showAbout)
+  {
+    setInt(show_about, showAbout ? 1 : 0);
   },
 
   getNetworkType()
@@ -40,7 +51,7 @@ export default
 function getInt(name, default_value)
 {
   let result = parseInt(Vue.localStorage.get(name));
-  if(!result)
+  if(result == null || isNaN(result))
   {
     return default_value;
   }

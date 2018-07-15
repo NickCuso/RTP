@@ -1,26 +1,73 @@
 <template>
-    <div class="row mt-3">
-        {{ topic.topic }}
-        {{ topic.total_support }}
-        ({{ topic.supporter_count }})
-        <span v-if="!$root.no_account_found">
-            <input type="number" v-model="value">
-            <button @click="add()">Add Tip</button>
-        </span>
-        <span v-if="topic.my_contribution > 0">
-            My Contribution: {{ topic.my_contribution }}
-            <button @click="refund()">Refund</button>
-        </span>
-        <div class="row" v-if="$root.is_owner">
-            <textarea v-model="comment" />
-            <button @click="postComment()">Comment</button>
-            <button @click="accept()">Accept</button>
-            <button @click="decline()">Decline</button>
+<div class="row mt-3 justify-content-center">
+    <div class="card">
+        <div class="row mt-3">
+            <div class="col">
+                <h3>
+                    {{ topic.topic }}
+                </h3>
+            </div>
         </div>
-        <div class="row" v-else>
-            {{ comment }}
+        <div class="row small text-secondary">
+            <div class="col">
+                {{ topic.total_support }} ETH
+                ({{ topic.supporter_count }} supporter<span v-if="topic.supporter_count>1">s</span>)
+            </div>
+        </div> 
+        <div class="row mt-2 card-text text-left" v-if="comment && !$root.is_owner">
+            <div class="col">HardlyDifficult said "<span class="font-italic">{{ comment }}</span>"
+            </div>
+        </div>
+        <div class="row mt-2" v-if="topic.my_contribution > 0">
+            <div class="col">
+                Your Contribution: {{ topic.my_contribution }} ETH
+                <button @click="refund()" class="btn btn-secondary">Refund</button>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-center" v-if="show_tip">
+            <div class="card text-center">
+                <div class="modal-header text-white bg-secondary">
+                    <h6 class="modal-title">
+                        Tip This Topic
+                    </h6>
+                    <button type="button" class="close" @click="show_tip = false" aria-label="Close">
+                        <span aria-hidden="true" class="x">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                        <div class="col-12">
+                            Tip: <input type="number" v-model="value" :min="$root.min_for_existing_topic" step="0.01"/> ETH
+                        </div>
+                        <div class="col-12 mt-1">
+                            ({{ $root.min_for_existing_topic }} ETH minimum)
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button @click="add()" class="btn btn-primary" v-bind:disabled="value < $root.min_for_existing_topic">Add Tip</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-2">
+            <div class="col">
+                <span v-if="!$root.no_account_found && !show_tip">
+                    <a @click="show_tip = true" href="#">Tip This Topic</a>
+                </span>
+            </div>
+        </div> 
+        <div class="row mt-3" v-if="$root.is_owner">
+            <div class="col">
+                <textarea v-model="comment" class="comment" />
+            </div>
+        </div>
+        <div class="row mt-3 mb-3" v-if="$root.is_owner">
+            <div class="col">
+                <button @click="accept()" class="btn btn-primary">Accept</button>
+                <button @click="decline()" class="btn btn-secondary">Decline</button>
+                <button @click="postComment()" class="btn btn-secondary">Comment</button>
+            </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -35,47 +82,47 @@ export default
     {
         return {
             comment: "",
-            value: 0,
+            value: null,
+            show_tip: false,
         }
     },
     methods:
     {
         async accept()
         {
-            await contract.accept(this.topic.topic, this.$root.onTxPosted);
-            this.$root.onTxComplete();
+            await contract.accept(this.topic.topic, this.$root.onTxPosted, this.$root.onTxComplete).catch(this.$root.onError);
         },
         async add()
         {
-            await contract.requestTopic(this.topic.topic, this.value, this.$root.onTxPosted);
-            this.$root.onTxComplete();
+            await contract.requestTopic(this.topic.topic, this.value, (data) => 
+            {
+                this.show_tip = false;
+                this.$root.onTxPosted(data);
+            }, this.$root.onTxComplete).catch(this.$root.onError);
         },
         async decline()
         {
-            await contract.decline(this.topic.topic, this.$root.onTxPosted);
-            this.$root.onTxComplete();
+            await contract.decline(this.topic.topic, this.$root.onTxPosted, this.$root.onTxComplete).catch(this.$root.onError);
         },
         async refund()
         {
-            await contract.refund(this.topic.topic, this.$root.onTxPosted);
-            this.$root.onTxComplete();
+            await contract.refund(this.topic.topic, this.$root.onTxPosted, this.$root.onTxComplete).catch(this.$root.onError);
         },
         async postComment()
         {
-            await neb.setMessage(this.topic.topic, this.comment, this.$root.onTxPosted, this.onError);
-            this.$root.onTxComplete();
+            await neb.setMessage(this.topic.topic, this.comment, this.$root.onTxPosted, this.$root.onTxComplete).catch(this.$root.onError);
         },
-        onError()
-        {
-            // TODO
-        }
     },
     async mounted()
     {
         this.comment = await neb.getMessage(this.topic.topic);
+        this.value = this.$root.min_for_existing_topic;
     },
 }
 </script>
 <style scoped>
-
+.comment 
+{
+    width: 85%;
+}
 </style>

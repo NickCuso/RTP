@@ -71,6 +71,7 @@ export default
   },
   async getEtherscanUrl()
   {
+		await init();
     switch(await this.getNetworkType())
     {
       case 1:
@@ -79,6 +80,11 @@ export default
         return "https://ropsten.etherscan.io";
     }
   },
+	async getTxUrl(txhash)
+	{
+		await init();
+		return await this.getEtherscanUrl() + "/tx/" + txhash;
+	},
   async getNetworkType()
   {
     if(localstorage.getWalletType() == 0 && await this.getAddress() != null)
@@ -86,8 +92,12 @@ export default
       await init();
       return new Promise((resolve, reject) =>
       {
-        web3.version.getNetwork((err, netId) => 
+        web3.version.getNetwork((error, netId) => 
         {
+          if(error)
+          {
+            return reject(error);
+          }
           resolve(parseInt(netId));
         });
       });

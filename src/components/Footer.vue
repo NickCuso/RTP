@@ -1,6 +1,45 @@
 <template>
     <div>
-        <a v-bind:href="contract_url" target="_blank">View Smart Contract ({{ contract_address }})</a>
+        <div>
+            <div class="row mt-3">
+                <hr>
+                <br>
+            </div> 
+            <div class="row tips">
+                You're also welcome to send tips directly:
+            </div>
+            <div class="row mt-1 justify-content-center">
+                <ul class="text-left tips">
+                    <li>
+                        BTC: 3FQdCDmZcXXE8psTfazXxHKsdaLsXgxfWs
+                    </li>
+                    <li>
+                        ETH (incl any ERC20): 0x7A23608a8eBe71868013BDA0d900351A83bb4Dc2
+                    </li>
+                    <li>
+                        LTC: MGF4vG8QT68otdbKT1ZjpqmFmkir67Wnjk
+                    </li>
+                    <li>
+                        NEO (incl any NEP5): AKSB636yR6wi4ivM7kJX3i999u3JGVgp5A
+                    </li>
+                    <li>
+                        DASH: XcCCFMgbNmCHiNEj1EbNGvSQBcRM8VCNNM
+                    </li>
+                    <li>
+                        BAN: ban_1597i1ybctywb37n5oikw79jyrrj7ocndaqad4foay861yeb1afppy3zxebz
+                    </li>
+                    <li>
+                        NANO: xrb_377ketnssiicfmruy6y7urhmbt1dkqprjwoob1nr8y7nxeixo4kuqx6gdm84
+                    </li>
+                    <li>
+                        NAS: n1S5JNP13pnoyswKbGtrtE3Bexz6pbtKaPj
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div v-if="contract_address">
+            <a v-bind:href="contract_url" target="_blank">View Smart Contract ({{ contract_address }})</a>
+        </div>
     </div>
 </template>
 
@@ -21,8 +60,7 @@ export default
     {
         async declineAll()
         {
-            await contract.declineAll();
-            this.$root.onTxComplete();
+            await contract.declineAll(this.$root.onTxPosted, this.$root.onTxComplete);
         },
     },
     async mounted()
@@ -33,5 +71,10 @@ export default
 }
 </script>
 <style scoped>
-
+.tips
+{
+    display: inline-block;
+    width: 40em;
+    font-size: .75em;
+}
 </style>

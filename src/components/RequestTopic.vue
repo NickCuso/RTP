@@ -1,16 +1,28 @@
 <template>
-    <div>
-        <br>
-        <br>
-        <hr>
-        <br>
-        <input type="text" v-model="topic">
-        <input type="number" v-model="value">
-        <button @click="requestTopic()">Request Topic</button>
-        <br>
-        <hr>
-        <br>
-        <br>
+    <div class="row justify-content-center mt-3">
+        <div class="card mb-3 text-center">
+            <div class="modal-header bg-light">
+                <h6 class="modal-title">
+                    Request a New Topic
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <input class="topic" type="text" v-model="topic" placeholder="Topic You Would Like Reviewed">
+                </div>
+                <div class="row mt-3 justify-content-center align-middle">
+                    <span class="aoeu">Tip:</span> 
+                    &nbsp;<input type="number" v-model="value" :min="$root.min_for_new_topic" step="0.01">&nbsp;
+                    <span class="aoeu">ETH</span>
+                </div>
+                <div class="row justify-content-center">
+                    ({{ $root.min_for_new_topic }} ETH minimum)
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <button @click="requestTopic()" class="btn btn-primary" v-bind:disabled="topic.length <= 3 || value < $root.min_for_new_topic">Request Topic</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -24,7 +36,7 @@ export default
     {
         return {
             topic: "",
-            value: 0,
+            value: this.$root.min_for_new_topic,
         }
     },
     methods:
@@ -36,12 +48,24 @@ export default
             //   "message": "Method not found",
             //   "code": -32601
             // }"
-            await contract.requestTopic(this.topic, this.value, this.$root.onTxPosted);
-            this.$root.onTxComplete();
+            await contract.requestTopic(this.topic, this.value, this.$root.onTxPosted, this.$root.onTxComplete).catch(this.$root.onError);
         },
     }
 }
 </script>
 <style scoped>
-
+.topic
+{
+    width: 30em;
+    max-width: 95%;
+}
+.aoeu
+{
+    line-height: 1.88;
+    vertical-align: middle;
+}
+.card
+{
+    min-width: 31em;
+}
 </style>

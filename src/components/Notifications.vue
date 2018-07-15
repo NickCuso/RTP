@@ -1,7 +1,11 @@
 <template>
     <div class="notifications-container">
         <div v-for="(notification, index) in $root.notifications" class="notification glow-1" v-bind:key="index" @click="removeNotification(index)">
-            <p v-if="notification.title" class="title">{{notification.title}}</p>
+            <div>
+                <div v-if="notification.title" class="title">
+                    {{notification.title}}
+                </div>
+            </div>
             <p v-if="notification.message" class="message">{{notification.message.toString()}}</p>
             <a onclick="event.stopPropagation();" target="_blank" v-if="notification.href" :href="notification.href">
                 <button class="btn btn-sm btn-primary">
@@ -92,7 +96,7 @@
         z-index:125;
         pointer-events:none;
     }
-    .notification{
+    .notification {
         display:flex;
         flex-direction: column;
         justify-content: space-around;
@@ -105,7 +109,10 @@
         width:300px;
         height:150px;
         margin-top:5px;
+        background-color: #f8f9fa;
         pointer-events:all;
+        border: 1px solid;
+        border-color: #888;
     }
     .notification > *{
         margin:0;

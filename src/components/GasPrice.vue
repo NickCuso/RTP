@@ -1,6 +1,6 @@
 <template>
     <div>
-        Gas Price: <input type="number" v-model="gasPrice" @change="onChange" class="gasPrice" /> Gwei
+        Gas Price: <input type="number" v-model="gasPrice" @change="onChange" class="gasPrice" step="0.1" /> Gwei
     </div>
 </template>
 
@@ -30,10 +30,9 @@ export default
 }
 </script>
 <style scoped>
-.gasPrice
+input[type=number]
 {
     width: 3.5em;
-    text-align: right;
     height: 1.25em;
 }
 </style>

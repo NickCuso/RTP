@@ -2,17 +2,21 @@
   <div>
     <Header />
 
+    <About />
     <Loading v-if="$root.loading" />
-    <Balance v-if="$root.balance != null" />
-    <NoAccountFound v-if="$root.no_account_found" />
+    <span v-else>
+      <NoAccountFound v-if="$root.no_account_found" />
+      <NetworkUnsupported v-if="!$root.networkIsSupported" />
 
-    <Topic v-for="topic in $root.topics" v-bind:key="topic.topic" :topic="topic" />
+      <Topic v-for="topic in $root.topics" v-bind:key="topic.topic" :topic="topic" />
+      <NoTopics v-if="$root.topics.length == 0" />
 
-    <RequestTopic v-if="!$root.no_account_found" />
+      <RequestTopic v-if="!$root.no_account_found && $root.networkIsSupported" />
 
-    <UserPanel v-if="!$root.no_account_found" />
+      <UserPanel v-if="!$root.no_account_found" />
 
-    <AdminPanel v-if="$root.is_owner" />
+      <AdminPanel v-if="$root.is_owner" />
+    </span>
 
     <Footer />
   </div>
@@ -22,12 +26,14 @@
 import eth from "../js/eth.js";
 import contract from "../js/contract.js";
 
+import About from './About';
 import AdminPanel from './AdminPanel';
-import Balance from './Balance';
 import Footer from './Footer';
 import Header from './Header';
 import Loading from './Loading';
+import NetworkUnsupported from './NetworkUnsupported';
 import NoAccountFound from './NoAccountFound';
+import NoTopics from './NoTopics';
 import RequestTopic from './RequestTopic';
 import Topic from './Topic';
 import UserPanel from './UserPanel';
@@ -36,12 +42,14 @@ export default
 {
   components: 
   {
+    About,
     AdminPanel,
-    Balance,
     Footer,
     Header,
     Loading,
+    NetworkUnsupported,
     NoAccountFound,
+    NoTopics,
     RequestTopic,
     Topic,
     UserPanel,

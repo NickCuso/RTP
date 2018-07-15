@@ -1,8 +1,9 @@
 <template>
     <div>
         <div v-if="$root.my_total_contributions > 0">
-            {{ $root.my_total_contributions }}
-            <button @click="refundAll()">Refund All</button>
+            Your Total Pending Contribution: {{ $root.my_total_contributions }} ETH
+            <br>
+            <button @click="refundAll()" class="btn btn-secondary">Refund All</button>
         </div>
     </div>
 </template>
@@ -17,7 +18,7 @@ export default
     {
         async refundAll()
         {
-            await contract.refundAll();
+            await contract.refundAll().catch(this.$root.onError);
             this.$root.onTxComplete();
         },
     }

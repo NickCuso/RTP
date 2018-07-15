@@ -1,14 +1,24 @@
 <template>
 <span>
 <nav id="navbar-example2" class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="#">Review This Please</a>
+  
+  <span class="navbar-brand">
+    <div class="subtitle">HardlyDifficult</div>
+    Review This Please
+    
+    <div v-if="!$root.show_about" class="small">
+        <a @click="$root.showAbout(true)" href="#">About</a>
+    </div>
+  </span>
+  
   <ul class="nav nav-pills">
     <li class="nav-item text-right" v-if="!$root.loading">
-        <WalletType />
-        <Network />
-        <GasPrice />
+      <WalletType />
+      <Network />
+      <GasPrice />
+      <Balance v-if="$root.balance != null" />
     </li>
-      </ul>
+  </ul>
 </nav>
     <Notifications />
 </span>
@@ -17,15 +27,17 @@
 
 
 <script>
+import Balance from './Balance';
 import GasPrice from './GasPrice';
 import Network from './Network';
-import WalletType from './WalletType';
 import Notifications from './Notifications';
+import WalletType from './WalletType';
 
 export default 
 {
   components: 
   {
+    Balance,
     GasPrice,
     Network,
     Notifications,
@@ -34,5 +46,9 @@ export default
 }
 </script>
 <style scoped>
-
+.subtitle
+{
+  font-size: 1rem;
+  color: grey;
+}
 </style>

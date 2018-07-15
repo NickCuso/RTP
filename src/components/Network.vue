@@ -1,13 +1,14 @@
 <template>
     <div>
-      Network: <select v-model="networkType" @change="onChange" v-if="can_change">
+      Network: <select v-model="$root.networkType" @change="onChange" v-if="can_change">
           <option value="1">Mainnet</option>
           <option value="3">Testnet (Ropsten)</option>
       </select>
-      <div v-else>
-          <span v-if="networkType==1">Mainnet</span>
-          <span v-if="networkType==3">Testnet (Ropsten)</span>
-      </div>
+      <span v-else>
+          <span v-if="$root.networkType==1">Mainnet</span>
+          <span v-else-if="$root.networkType==3">Testnet (Ropsten)</span>
+          <span v-else class="text-danger">Unsupported</span>
+      </span>
     </div>
 </template>
 
@@ -20,8 +21,7 @@ export default
   data()
   {
     return {
-        networkType: 0,
-        can_change: true,
+        can_change: null,
     }
   },
   methods:
@@ -34,15 +34,10 @@ export default
   },
   async mounted()
   {
-      if(local.getWalletType() == 0 && !this.$root.no_account_found)
-      { // fall back to metamask instead
-        this.can_change = false;
-        this.networkType = await eth.getNetworkType();
-      }
-      else
-      {
-          this.networkType = local.getNetworkType();
-      }
+    if(local.getWalletType() == 0 && !this.$root.no_account_found)
+    { // fall back to metamask instead
+      this.can_change = false;
+    }    
   },
 }
 </script>

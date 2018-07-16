@@ -1,7 +1,9 @@
 <template>
 <span>
-<nav id="navbar-example2" class="navbar navbar-light bg-light">
-  
+<nav id="navbar-example2" class="navbar navbar-light bg-light" style="width:100vw;left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;">
   <span class="navbar-brand">
     <div class="subtitle">HardlyDifficult</div>
     Review This Please

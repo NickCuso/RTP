@@ -440,6 +440,18 @@ export default
 			return contract.owner();
 		});		
 	},
+	async setOwner(owner, onTxPosted, onTxComplete)
+	{
+		if(!contract_address || !owner || owner.length < 5)
+		{
+			return;
+		}
+
+		return new Promise((resolve, reject) =>
+		{
+			contract.transferOwnership(owner).send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted, onTxComplete))
+		});
+	},
 	async getMinForNewTopic()
 	{
 		if(!contract_address)
@@ -497,7 +509,16 @@ export default
     {
       contract.refundAll().send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted, onTxComplete));
     });
-  },
+	},
+	async setMins(min_for_new_topic, min_for_existing_topic, onTxPosted, onTxComplete)
+	{
+		await init();
+
+		return new Promise((resolve, reject) =>
+		{
+			contract.setMins(min_for_new_topic, min_for_existing_topic).send({gasPrice: localstorage.getGasPriceInWei()}, async (error, txhash) => onWrite(resolve, reject, error, txhash, onTxPosted, onTxComplete))
+		});
+	},
   async accept(topic, onTxPosted, onTxComplete)
   {
 		await init();

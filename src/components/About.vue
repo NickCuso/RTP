@@ -36,7 +36,7 @@
                     The video will be of our usual style, I will not promise a positive review.
                 </p>
                 <p class="card-text">
-                    Switch to Ropsten testnet to see a few examples and to test the dapp.
+                    Switch to Ropsten testnet to see a few examples and to test this dapp.
                 </p>
                 <p class="card-text">
                     <span class="small">

@@ -23,7 +23,7 @@
                     Step 2
                 </h5>
                 <p class="card-text step">
-                    Send a tip (in ETH) for making a video on the topic.
+                    Send a tip (in ETH) for making a video on that topic.
                 </p>
                 <h5 class="card-text">
                     Step 3
@@ -38,9 +38,11 @@
                 <p class="card-text">
                     Switch to Ropsten testnet to see a few examples and to test the dapp.
                 </p>
-                <p class="card-text small">
-                    * You can get your money back anytime, up until I accept the request.  
-                    If I decline the money will be returned to you automatically.
+                <p class="card-text">
+                    <span class="small">
+                        * You can get your money back anytime, up until I accept the request.  
+                        If I decline the money will be returned to you automatically.
+                    </span>
                 </p>
             </div>
         </div>

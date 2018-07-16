@@ -13,7 +13,7 @@
                 <div class="row mt-3 justify-content-center align-middle">
                     <span class="aoeu">Tip:</span> 
                     &nbsp;<input type="number" v-model="value" :min="$root.min_for_new_topic" step="0.01">&nbsp;
-                    <span class="aoeu">ETH</span> ({{ value | ethToUsd }})
+                    <span class="aoeu">ETH {{ value | ethToUsd }}</span> 
                 </div>
                 <div class="row justify-content-center small">
                     {{ $root.min_for_new_topic | eth }} minimum

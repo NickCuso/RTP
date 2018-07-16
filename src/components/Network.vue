@@ -1,12 +1,12 @@
 <template>
     <div>
-      Network: <select v-model="$root.networkType" @change="onChange" v-if="can_change">
+      Network: <select v-model="networkType" @change="onChange" v-if="can_change">
           <option value="1">Mainnet</option>
           <option value="3">Testnet (Ropsten)</option>
       </select>
       <span v-else>
-          <span v-if="$root.networkType==1">Mainnet</span>
-          <span v-else-if="$root.networkType==3">Testnet (Ropsten)</span>
+          <span v-if="networkType==1">Mainnet</span>
+          <span v-else-if="networkType==3">Testnet (Ropsten)</span>
           <span v-else class="text-danger">Unsupported</span>
       </span>
     </div>
@@ -22,6 +22,7 @@ export default
   {
     return {
         can_change: null,
+        networkType: this.$root.networkType,
     }
   },
   methods:

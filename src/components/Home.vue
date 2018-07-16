@@ -6,7 +6,7 @@
     <Loading v-if="$root.loading" />
     <span v-else>
       <NoAccountFound v-if="$root.no_account_found" />
-      <NetworkUnsupported v-if="!$root.networkIsSupported" />
+      <NetworkUnsupported v-if="!$root.no_account_found && !$root.networkIsSupported" />
 
       <Topic v-for="topic in $root.topics" v-bind:key="topic.topic" :topic="topic" />
       <NoTopics v-if="$root.topics.length == 0" />

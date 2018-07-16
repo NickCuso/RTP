@@ -36,11 +36,11 @@
                     The video will be of our usual style, I will not promise a positive review.
                 </p>
                 <p class="card-text">
-                    You can test this dapp using the Ropsten testnet.
+                    Switch to Ropsten testnet to see a few examples and to test the dapp.
                 </p>
                 <p class="card-text small">
                     * You can get your money back anytime, up until I accept the request.  
-                    If I decline, the money will be returned to you automatically.
+                    If I decline the money will be returned to you automatically.
                 </p>
             </div>
         </div>

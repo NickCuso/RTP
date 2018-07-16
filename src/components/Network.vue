@@ -37,7 +37,11 @@ export default
     if(local.getWalletType() == 0 && !this.$root.no_account_found)
     { // fall back to metamask instead
       this.can_change = false;
-    }    
+    } 
+    else
+    {
+      this.can_change = true;
+    }   
   },
 }
 </script>

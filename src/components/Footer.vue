@@ -20,19 +20,19 @@
                         LTC: MGF4vG8QT68otdbKT1ZjpqmFmkir67Wnjk
                     </li>
                     <li>
-                        NEO (incl any NEP5): AKSB636yR6wi4ivM7kJX3i999u3JGVgp5A
+                        NANO: xrb_377ketnssiicfmruy6y7urhmbt1dkqprjwoob1nr8y7nxeixo4kuqx6gdm84
                     </li>
                     <li>
                         DASH: XcCCFMgbNmCHiNEj1EbNGvSQBcRM8VCNNM
                     </li>
                     <li>
-                        BAN: ban_1597i1ybctywb37n5oikw79jyrrj7ocndaqad4foay861yeb1afppy3zxebz
-                    </li>
-                    <li>
-                        NANO: xrb_377ketnssiicfmruy6y7urhmbt1dkqprjwoob1nr8y7nxeixo4kuqx6gdm84
-                    </li>
-                    <li>
                         NAS: n1S5JNP13pnoyswKbGtrtE3Bexz6pbtKaPj
+                    </li>
+                    <li>
+                        NEO (incl any NEP5): AKSB636yR6wi4ivM7kJX3i999u3JGVgp5A
+                    </li>
+                    <li>
+                        BAN: ban_1597i1ybctywb37n5oikw79jyrrj7ocndaqad4foay861yeb1afppy3zxebz
                     </li>
                 </ul>
             </div>

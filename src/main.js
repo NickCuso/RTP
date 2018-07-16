@@ -64,6 +64,11 @@ Vue.filter('ethOnly', function (value)
   return eth;
 });
 
+Vue.filter('ethToUsd', function (value) 
+{
+  return "~$" + numberWithCommas(value * v.eth_to_usd, 2) + " USD";
+});
+
 let v = new Vue({
   el: '#app',
   router,

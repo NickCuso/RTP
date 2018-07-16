@@ -36,7 +36,7 @@
                 </div>
                 <div class="card-body">
                         <div class="col-12">
-                            Tip: <input type="number" v-model="value" :min="$root.min_for_existing_topic" step="0.01"/> ETH
+                            Tip: <input type="number" v-model="value" :min="$root.min_for_existing_topic" step="0.01"/> ETH ({{ value | ethToUsd }})
                         </div>
                         <div class="col-12 mt-1 small">
                             {{ $root.min_for_existing_topic | eth }} minimum

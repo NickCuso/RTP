@@ -52,7 +52,7 @@ Vue.filter('eth', function (value)
   eth = eth + " ETH";
   if(v.eth_to_usd)
   {
-    return eth + " (~$" + numberWithCommas(value * v.eth_to_usd, 2) + " USD)";
+    return eth + " (~$" + numberWithCommas(value * v.eth_to_usd, 2) + ")";
   }
   return eth;
 });
@@ -70,7 +70,7 @@ Vue.filter('ethToUsd', function (value)
   {
     return "";
   }
-  return "(~$" + numberWithCommas(value * v.eth_to_usd, 2) + " USD)";
+  return "(~$" + numberWithCommas(value * v.eth_to_usd, 2) + ")";
 });
 
 let v = new Vue({

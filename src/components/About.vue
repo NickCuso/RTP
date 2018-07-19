@@ -21,12 +21,12 @@
 </p>
 <div class=row>
 <div class=col>
-<!-- <ul>
+<ul>
 <li>Whitepaper deep dives and Coin/Token/ICO reviews</li>
 <li>Tutorials</li>
 <li>Crypto concept discussions (e.g. What’s a security token? What are the differences between various consensus algorithms?)</li>
 <li>Open-source development commissions (dapps, etc)</li>
-</ul> -->
+</ul> 
 </div>  
 </div>
 <p>

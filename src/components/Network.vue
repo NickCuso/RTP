@@ -1,6 +1,6 @@
 <template>
     <div>
-      Network: <select v-model="networkType" @change="onChange" v-if="can_change">
+      Network: <select v-model="networkType" @change="onChange" v-if="$root.can_change_network">
           <option value="1">Mainnet</option>
           <option value="3">Testnet (Ropsten)</option>
       </select>
@@ -21,7 +21,6 @@ export default
   data()
   {
     return {
-        can_change: null,
         networkType: this.$root.networkType,
     }
   },
@@ -32,17 +31,6 @@ export default
         local.setNetworkType(this.networkType);
         location.reload();
     }
-  },
-  async mounted()
-  {
-    if(local.getWalletType() == 0 && !this.$root.no_account_found)
-    { // fall back to metamask instead
-      this.can_change = false;
-    } 
-    else
-    {
-      this.can_change = true;
-    }   
   },
 }
 </script>

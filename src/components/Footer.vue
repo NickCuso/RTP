@@ -40,6 +40,10 @@
         <div v-if="contract_address">
             <a v-bind:href="contract_url" target="_blank">View Smart Contract ({{ contract_address }})</a>
         </div>
+        <div>
+            YouTube | Twitch | SteemIt | Twitter
+        </div>
+        <br><br>
     </div>
 </template>
 

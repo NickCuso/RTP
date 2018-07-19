@@ -97,6 +97,7 @@ let v = new Vue({
       min_for_new_topic: null,
       show_about: local.getShowAbout(),
       eth_to_usd: null,
+      can_change_network: null,
     }
   },
   async mounted() 
@@ -138,7 +139,8 @@ let v = new Vue({
     async refreshData()
     {
       let topics = [];
-      if(local.getWalletType() == 0 && !this.$root.no_account_found)
+      this.$root.can_change_network = !(local.getWalletType() == 0 && typeof(web3) !== 'undefined');
+      if(!this.$root.can_change_network)
       { // fall back to metamask instead
         this.networkType = await eth.getNetworkType();
         this.networkIsSupported = this.networkType == 1 || this.networkType == 3;

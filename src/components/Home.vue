@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <Notifications />
 
     <About />
     <Loading v-if="$root.loading" />
@@ -32,6 +32,7 @@ import Footer from './Footer';
 import Header from './Header';
 import Loading from './Loading';
 import NetworkUnsupported from './NetworkUnsupported';
+import Notifications from './Notifications';
 import NoAccountFound from './NoAccountFound';
 import NoTopics from './NoTopics';
 import RequestTopic from './RequestTopic';
@@ -49,6 +50,7 @@ export default
     Loading,
     NetworkUnsupported,
     NoAccountFound,
+    Notifications,
     NoTopics,
     RequestTopic,
     Topic,

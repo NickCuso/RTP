@@ -99,7 +99,7 @@ export default
 	},
   async getNetworkType()
   {
-    if(localstorage.getWalletType() == 0 && await this.getAddress() != null)
+    if(localstorage.getWalletType() == 0 && typeof(web3) !== 'undefined')
     {
       await init();
       return new Promise((resolve, reject) =>

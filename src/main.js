@@ -143,13 +143,13 @@ let v = new Vue({
       if(!this.$root.can_change_network)
       { // fall back to metamask instead
         this.networkType = await eth.getNetworkType();
-        this.networkIsSupported = this.networkType == 1 || this.networkType == 3;
       }
       else
       {
-          this.networkType = local.getNetworkType();
+        this.networkType = local.getNetworkType();
       }
-
+      
+      this.networkIsSupported = this.networkType == 1 || this.networkType == 3;
       let topic_count = await contract.getTopicCount();
       let address = await eth.getAddress();
       this.my_total_contributions = 0;

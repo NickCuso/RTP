@@ -41,7 +41,13 @@
             <a v-bind:href="contract_url" target="_blank">View Smart Contract ({{ contract_address }})</a>
         </div>
         <div>
-            YouTube | Twitch | SteemIt | Twitter
+            <a href="https://youtube.com/HardlyDifficult">YouTube</a>
+            | 
+            <a href="https://twitch.tv/HardlyDifficult">Twitch</a>
+            | 
+            <a href="https://steemit.com/@HardlyDifficult">SteemIt</a>
+            | 
+            <a href="https://Twitter.com/HardlyDifficult">Twitter</a>
         </div>
         <br><br>
     </div>

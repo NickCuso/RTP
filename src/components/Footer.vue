@@ -34,6 +34,9 @@
                     <li>
                         BAN: ban_1597i1ybctywb37n5oikw79jyrrj7ocndaqad4foay861yeb1afppy3zxebz
                     </li>
+                    <li>
+                        XMR: 46KnrHGZHQZZma9Br6ntHCK4uVC9zPsWo7fEuqavKcgbQtwJng5DzjuRJy1YAEmZ2zSzwvAVCzAKXULJt6RyYZS3HGFkrhZ
+                    </li>
                 </ul>
             </div>
         </div>
